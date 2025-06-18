@@ -67,9 +67,11 @@ public class CargaInicial implements CommandLineRunner {
         Stock s1 = new Stock(sucCentral, v1, 5);  // stock de vehículos para toda la red 
         Stock s2 = new Stock(sucCentral, v2, 3);  // stock de vehículos para toda la red
         Stock s3 = new Stock(sucNote, v3, 2);  // stock en particular para la concesionaria
+        Stock s4 = new Stock(sucNote, v1, 4);  // stock en particular para la concesionaria
         stockRepository.save(s1);
         stockRepository.save(s2);
         stockRepository.save(s3);
+        stockRepository.save(s4);
         System.out.println("Datos iniciales cargados correctamente.");
     }
 }
