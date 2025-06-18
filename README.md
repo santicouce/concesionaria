@@ -2,6 +2,7 @@
 
 Este proyecto fue desarrollado como parte de la materia **Microservicios y APIs Escalables** de la Universidad de Palermo.  
 La idea principal es simular el funcionamiento de una red de concesionarias, donde se pueden gestionar clientes, vehículos, ventas, servicios mecánicos y stock.
+Al iniciar el servidor corre una pequeña logica que carga datos iniciales en la base de datos. (ver archivo CargaInicial.java)
 
 ## Supuestos
 
