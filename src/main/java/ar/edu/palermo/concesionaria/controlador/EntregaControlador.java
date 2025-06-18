@@ -13,7 +13,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/entregas")
 public class EntregaControlador {
-
+    // Expongo estos endpoints con fines demostrativos, y para testeo, ya que no es explicitamente requerido
+    // un controlador para que el servicio de ventas pueda calcular el tiempo de entrega.
     private final IServicioEntrega servicioEntrega;
     private final SucursalRepository sucursalRepository;
     private final VehiculoRepository vehiculoRepository;
