@@ -22,10 +22,6 @@ public class Venta {
     @JoinColumn(name = "vehiculo_id")
     private Vehiculo vehiculo;
 
-    @ManyToOne
-    @JoinColumn(name = "sucursal_id")
-    private Sucursal sucursal;
-
     private LocalDate fecha;
     private Double monto;
     private Integer diasEntrega;
@@ -34,11 +30,10 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Cliente cliente, Empleado empleado, Vehiculo vehiculo, Sucursal sucursal, LocalDate fecha, Double monto, Integer diasEntrega) {
+    public Venta(Cliente cliente, Empleado empleado, Vehiculo vehiculo, LocalDate fecha, Double monto, Integer diasEntrega) {
         setCliente(cliente);
         setEmpleado(empleado);
         setVehiculo(vehiculo);
-        setSucursal(sucursal);
         setFecha(fecha);
         setMonto(monto);
         setDiasEntrega(diasEntrega);
@@ -71,14 +66,6 @@ public class Venta {
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
     }
 
     public LocalDate getFecha() {

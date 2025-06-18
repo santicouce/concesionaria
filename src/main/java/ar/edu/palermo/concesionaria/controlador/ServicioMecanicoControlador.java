@@ -1,6 +1,7 @@
 package ar.edu.palermo.concesionaria.controlador;
 
 import ar.edu.palermo.concesionaria.dominio.ServicioMecanico;
+import ar.edu.palermo.concesionaria.dto.ServicioMecanicoRequest;
 import ar.edu.palermo.concesionaria.negocio.IServicioMecanicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class ServicioMecanicoControlador {
     }
 
     @PostMapping
-    public ServicioMecanico crear(@RequestBody ServicioMecanico servicio) {
-        return servicioService.guardar(servicio);
+    public ServicioMecanico crear(@RequestBody ServicioMecanicoRequest request) {
+        return servicioService.guardar(request);
     }
 
     @GetMapping("/{id}")

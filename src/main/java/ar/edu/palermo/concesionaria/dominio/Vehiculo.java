@@ -13,9 +13,18 @@ public class Vehiculo {
     private String marca;
     private String modelo;
     private Integer anio;
+    private String tipo;
 
     // Constructores
     public Vehiculo() {
+    }
+
+    public Vehiculo(String numeroChasis, String marca, String modelo, Integer anio, String tipo) {
+        setNumeroChasis(numeroChasis);
+        setMarca(marca);
+        setModelo(modelo);
+        setAnio(anio);
+        setTipo(tipo);
     }
 
     public Vehiculo(String numeroChasis, String marca, String modelo, Integer anio) {
@@ -23,9 +32,17 @@ public class Vehiculo {
         setMarca(marca);
         setModelo(modelo);
         setAnio(anio);
+        setTipo("automovil"); // Valor por defecto
     }
 
     // Getters y setters
+
+    public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     public Integer getId() {
         return id;
     }
