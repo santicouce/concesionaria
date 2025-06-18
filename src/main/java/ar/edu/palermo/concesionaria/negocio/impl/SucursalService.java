@@ -55,8 +55,8 @@ public class SucursalService implements ISucursalService {
         }
         // Validar que solo haya una sucursal central
         if (Boolean.TRUE.equals(sucursal.getEsCentral())) {
-            Optional<Sucursal> existente = sucursalRepository.findByEsCentralTrue();
-            if (existente.isPresent()) {
+            Sucursal existente = sucursalRepository.findByEsCentralTrue();
+            if (existente != null) {
                 throw new DatosInvalidosException("Ya existe una sucursal central registrada");
             }
         }
