@@ -6,8 +6,9 @@ La idea principal es simular el funcionamiento de una red de concesionarias, don
 ## Supuestos
 
 - Solo puede haber una única sucursal central.
-- El tiempo de entrega al cliente depende de la sucursal.
-- Si no hay stock local, se calcula tiempo extra desde la central.
+- Cualquier cliente puede hacer el service de un auto comprado en la consecionaria, sin importa la sucursal.
+- Los empleados solo venden vehiculos para la sucursal asignada.
+- Central puede enviar autos a sucursales, pero entre sucursales no pueden.
 
 ## Comando para iniciar el proyecto
 
