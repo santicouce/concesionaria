@@ -2,7 +2,7 @@
 
 Este microservicio forma parte del sistema de gestión de una concesionaria, y se encarga exclusivamente de la administración de los **clientes**.
 
-## 📦 Funcionalidad
+## Funcionalidad
 
 - Permite registrar, listar, eliminar y consultar clientes.
 - Está preparado para integrarse con otros microservicios como el de ventas, sucursales, etc.
@@ -15,7 +15,7 @@ Este microservicio forma parte del sistema de gestión de una concesionaria, y s
 http://localhost:8081/
 ```
 
-## ▶️ Cómo correr este microservicio
+## Cómo correr este microservicio
 
 1. Cloná el repositorio.
 2. Ejecutá el siguiente comando desde terminal:
