@@ -1,6 +1,6 @@
-package ar.edu.palermo.concesionaria.negocio;
+package ar.edu.palermo.sucursal_service.negocio;
 
-import ar.edu.palermo.concesionaria.dominio.Sucursal;
+import ar.edu.palermo.sucursal_service.dominio.Sucursal;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,9 +1,9 @@
-package ar.edu.palermo.concesionaria.negocio.impl;
+package ar.edu.palermo.sucursal_service.negocio.impl;
 
-import ar.edu.palermo.concesionaria.dominio.Sucursal;
-import ar.edu.palermo.concesionaria.exceptions.DatosInvalidosException;
-import ar.edu.palermo.concesionaria.negocio.ISucursalService;
-import ar.edu.palermo.concesionaria.repositorio.SucursalRepository;
+import ar.edu.palermo.sucursal_service.dominio.Sucursal;
+import ar.edu.palermo.sucursal_service.exceptions.DatosInvalidosException;
+import ar.edu.palermo.sucursal_service.negocio.ISucursalService;
+import ar.edu.palermo.sucursal_service.repositorio.SucursalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
