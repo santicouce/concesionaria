@@ -1,8 +1,8 @@
-package ar.edu.palermo.concesionaria.negocio.impl;
+package ar.edu.palermo.cliente_service.negocio.impl;
 
-import ar.edu.palermo.concesionaria.dominio.Cliente;
-import ar.edu.palermo.concesionaria.negocio.IClienteService;
-import ar.edu.palermo.concesionaria.repositorio.ClienteRepository;
+import ar.edu.palermo.cliente_service.dominio.Cliente;
+import ar.edu.palermo.cliente_service.negocio.IClienteService;
+import ar.edu.palermo.cliente_service.repositorio.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package ar.edu.palermo.concesionaria.controlador;
+package ar.edu.palermo.cliente_service.controlador;
 
-import ar.edu.palermo.concesionaria.dominio.Cliente;
-import ar.edu.palermo.concesionaria.negocio.IClienteService;
+import ar.edu.palermo.cliente_service.dominio.Cliente;
+import ar.edu.palermo.cliente_service.negocio.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

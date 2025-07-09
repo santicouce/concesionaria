@@ -1,4 +1,4 @@
-package ar.edu.palermo.concesionaria.dominio;
+package ar.edu.palermo.cliente_service.dominio;
 
 import jakarta.persistence.*;
 

@@ -10,17 +10,9 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "empleado_id")
-    private Empleado empleado;
-
-    @ManyToOne
-    @JoinColumn(name = "vehiculo_id")
-    private Vehiculo vehiculo;
+    private Integer clienteId;
+    private Integer empleadoId;
+    private Integer vehiculoId;
 
     private LocalDate fecha;
     private Double monto;
@@ -30,10 +22,10 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Cliente cliente, Empleado empleado, Vehiculo vehiculo, LocalDate fecha, Double monto, Integer diasEntrega) {
-        setCliente(cliente);
-        setEmpleado(empleado);
-        setVehiculo(vehiculo);
+    public Venta(Integer clienteId, Integer empleadoId, Integer vehiculoId, LocalDate fecha, Double monto, Integer diasEntrega) {
+        setClienteId(clienteId);
+        setEmpleadoId(empleadoId);
+        setVehiculoId(vehiculoId);
         setFecha(fecha);
         setMonto(monto);
         setDiasEntrega(diasEntrega);
@@ -44,28 +36,28 @@ public class Venta {
         return id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Integer getClienteId() {
+        return clienteId;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setClienteId(Integer clienteId) {
+        this.clienteId = clienteId;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Integer getEmpleadoId() {
+        return empleadoId;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setEmpleadoId(Integer empleadoId) {
+        this.empleadoId = empleadoId;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public Integer getVehiculoId() {
+        return vehiculoId;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setVehiculoId(Integer vehiculoId) {
+        this.vehiculoId = vehiculoId;
     }
 
     public LocalDate getFecha() {

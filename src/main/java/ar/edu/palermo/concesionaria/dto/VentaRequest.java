@@ -3,8 +3,6 @@ package ar.edu.palermo.concesionaria.dto;
 import java.time.LocalDate;
 
 public class VentaRequest {
-    // Creo esta clase para poder recibir los primary keys de las entidades relacionadas
-    // y asi luego poder buscar los objetos correspondientes en la base de datos.
     private Integer clienteId;
     private Integer vehiculoId;
     private Integer empleadoId;
