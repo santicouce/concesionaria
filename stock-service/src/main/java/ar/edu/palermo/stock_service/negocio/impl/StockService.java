@@ -7,6 +7,8 @@ import ar.edu.palermo.stock_service.negocio.IStockService;
 import ar.edu.palermo.stock_service.repositorio.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ar.edu.palermo.stock_service.exceptions.SucursalNotFoundException;
+import ar.edu.palermo.stock_service.exceptions.VehiculoNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,10 +33,10 @@ public class StockService implements IStockService {
     @Override
     public Stock guardar(Stock stock) {
         if (!sucursalClient.existeSucursal(stock.getSucursalId())) {
-            throw new RuntimeException("Sucursal no encontrada");
+            throw new SucursalNotFoundException("La sucursal con ID " + stock.getSucursalId() + " no existe");
         }
         if (!vehiculoClient.existeVehiculo(stock.getVehiculoId())) {
-            throw new RuntimeException("Vehículo no encontrado");
+            throw new VehiculoNotFoundException("El vehículo con ID " + stock.getVehiculoId() + " no existe");
         }
         return stockRepository.save(stock);
     }
