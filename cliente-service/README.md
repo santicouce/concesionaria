@@ -2,14 +2,14 @@
 
 Este microservicio forma parte del sistema de gestión de una concesionaria, y se encarga exclusivamente de la administración de los **clientes**.
 
-## 📦 Funcionalidad
+## Funcionalidad
 
 - Permite registrar, listar, eliminar y consultar clientes.
 - Está preparado para integrarse con otros microservicios como el de ventas, sucursales, etc.
 - Utiliza base de datos H2 en memoria.
 - Se registra en Eureka Server para descubrimiento de servicios.
 
-## ▶️ Cómo correr este microservicio
+## Cómo correr este microservicio
 
 1. Cloná el repositorio.
 2. Ejecutá el siguiente comando desde terminal:
