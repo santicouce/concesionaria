@@ -14,4 +14,6 @@ public interface ISucursalService {
     Optional<Sucursal> obtenerPorId(Integer id);
 
     void eliminar(Integer id);
+
+    Optional<Sucursal> obtenerCentral();
 }

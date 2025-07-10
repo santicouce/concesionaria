@@ -2,6 +2,7 @@ package ar.edu.palermo.sucursal_service.dominio;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Entity
 public class Sucursal {
@@ -110,6 +111,11 @@ public class Sucursal {
 
     public void setEsCentral(Boolean esCentral) {
         this.esCentral = esCentral;
+    }
+
+    public Optional<Sucursal> map(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'map'");
     }
 
 }

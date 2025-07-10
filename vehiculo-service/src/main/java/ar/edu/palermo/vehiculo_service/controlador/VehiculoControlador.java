@@ -1,12 +1,12 @@
 package ar.edu.palermo.vehiculo_service.controlador;
-
+import org.springframework.http.HttpStatus;
 import ar.edu.palermo.vehiculo_service.dominio.Vehiculo;
 import ar.edu.palermo.vehiculo_service.negocio.IVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/vehiculos")
@@ -30,8 +30,10 @@ public class VehiculoControlador {
     }
 
     @GetMapping("/{id}")
-    public Optional<Vehiculo> obtenerPorId(@PathVariable Integer id) {
-        return vehiculoService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerPorId(@PathVariable Integer id) {
+        return vehiculoService.obtenerPorId(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehiculo no encontrada"));
     }
 
     @DeleteMapping("/{id}")

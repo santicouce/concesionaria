@@ -1,7 +1,7 @@
-package ar.edu.palermo.concesionaria.negocio;
+package ar.edu.palermo.venta_service.negocio;
 
-import ar.edu.palermo.concesionaria.dominio.Venta;
-import ar.edu.palermo.concesionaria.dto.VentaRequest;
+import ar.edu.palermo.venta_service.dominio.Venta;
+import ar.edu.palermo.venta_service.dto.VentaRequest;
 
 import java.util.List;
 import java.util.Optional;

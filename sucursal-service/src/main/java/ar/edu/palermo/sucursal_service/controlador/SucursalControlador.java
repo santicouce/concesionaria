@@ -2,6 +2,8 @@ package ar.edu.palermo.sucursal_service.controlador;
 import org.springframework.http.HttpStatus;
 import ar.edu.palermo.sucursal_service.dominio.Sucursal;
 import ar.edu.palermo.sucursal_service.negocio.ISucursalService;
+import ar.edu.palermo.sucursal_service.repositorio.SucursalRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +42,13 @@ public class SucursalControlador {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Integer id) {
         sucursalService.eliminar(id);
+    }
+
+    @GetMapping("/central")
+    public ResponseEntity<Integer> obtenerIdSucursalCentral() {
+        Optional<Sucursal> sucursalCentral = sucursalService.obtenerCentral();
+        return sucursalCentral
+            .map(sucursal -> ResponseEntity.ok(sucursal.getId()))
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

@@ -1,31 +1,21 @@
-package ar.edu.palermo.stock_service.cliente;
+package ar.edu.palermo.venta_service.cliente;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class SucursalClient {
+public class ClienteClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public boolean existeSucursal(Integer sucursalId) {
+    public boolean existeCliente(Integer idCliente) {
         try {
             ResponseEntity<Void> response = restTemplate.getForEntity(
-                "http://localhost:8086/sucursales/" + sucursalId,
-                Void.class
-            );
+                "http://localhost:8081/clientes/" + idCliente, Void.class);
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public Integer obtenerIdSucursalCentral() {
-        Integer id = restTemplate.getForObject(
-        "http://localhost:8086/sucursales/central",
-        Integer.class
-        );
-        return id;
     }
 }

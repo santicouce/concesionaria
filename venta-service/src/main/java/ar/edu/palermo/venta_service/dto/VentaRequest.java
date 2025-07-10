@@ -1,4 +1,4 @@
-package ar.edu.palermo.concesionaria.dto;
+package ar.edu.palermo.venta_service.dto;
 
 import java.time.LocalDate;
 

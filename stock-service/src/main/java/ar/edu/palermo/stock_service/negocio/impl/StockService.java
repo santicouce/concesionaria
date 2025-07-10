@@ -7,6 +7,8 @@ import ar.edu.palermo.stock_service.negocio.IStockService;
 import ar.edu.palermo.stock_service.repositorio.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ar.edu.palermo.stock_service.exceptions.InvalidRequestException;
 import ar.edu.palermo.stock_service.exceptions.SucursalNotFoundException;
 import ar.edu.palermo.stock_service.exceptions.VehiculoNotFoundException;
 
@@ -59,5 +61,19 @@ public class StockService implements IStockService {
     @Override
     public Optional<Stock> buscarPorSucursalYVehiculo(Integer sucursalId, Integer vehiculoId) {
         return stockRepository.findBySucursalIdAndVehiculoId(sucursalId, vehiculoId);
+    }
+
+    @Override
+    public Optional<Stock> decrementarStock(Integer stockId) {
+        return stockRepository.findById(stockId)
+            .map(stock -> {
+                int cantidadActual = stock.getCantidad();
+                if (cantidadActual <= 0) {
+                    throw new InvalidRequestException(
+                        "No hay stock suficiente para realizar la venta (stockId=" + stockId + ")");
+                }
+                stock.setCantidad(cantidadActual - 1);
+                return stockRepository.save(stock);
+            });
     }
 }

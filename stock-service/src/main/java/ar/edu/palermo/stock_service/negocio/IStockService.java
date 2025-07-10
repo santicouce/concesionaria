@@ -16,4 +16,6 @@ public interface IStockService {
     void eliminar(Integer id);
 
     Optional<Stock> buscarPorSucursalYVehiculo(Integer sucursalId, Integer vehiculoId);
+    
+    Optional<Stock> decrementarStock(Integer stockId);
 }

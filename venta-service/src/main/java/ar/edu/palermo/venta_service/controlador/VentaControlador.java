@@ -1,8 +1,8 @@
-package ar.edu.palermo.concesionaria.controlador;
+package ar.edu.palermo.venta_service.controlador;
 
-import ar.edu.palermo.concesionaria.dominio.Venta;
-import ar.edu.palermo.concesionaria.dto.VentaRequest;
-import ar.edu.palermo.concesionaria.negocio.IVentaService;
+import ar.edu.palermo.venta_service.dominio.Venta;
+import ar.edu.palermo.venta_service.dto.VentaRequest;
+import ar.edu.palermo.venta_service.negocio.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

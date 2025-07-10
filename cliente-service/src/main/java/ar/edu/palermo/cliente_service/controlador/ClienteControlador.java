@@ -4,9 +4,9 @@ import ar.edu.palermo.cliente_service.dominio.Cliente;
 import ar.edu.palermo.cliente_service.negocio.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
@@ -30,8 +30,10 @@ public class ClienteControlador {
     }
 
     @GetMapping("/{id}")
-    public Optional<Cliente> obtenerPorId(@PathVariable Integer id) {
-        return clienteService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerPorId(@PathVariable Integer id) {
+        return clienteService.obtenerPorId(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrada"));
     }
 
     @DeleteMapping("/{id}")
