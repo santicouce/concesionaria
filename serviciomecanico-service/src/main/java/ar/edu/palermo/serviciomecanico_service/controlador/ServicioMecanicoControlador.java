@@ -1,7 +1,6 @@
 package ar.edu.palermo.serviciomecanico_service.controlador;
 
-import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
-import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoDTO;
 import ar.edu.palermo.serviciomecanico_service.negocio.IServicioMecanicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +20,18 @@ public class ServicioMecanicoControlador {
     }
 
     @GetMapping
-    public List<ServicioMecanico> obtenerTodos() {
+    public List<ServicioMecanicoDTO> obtenerTodos() {
         return servicioService.obtenerTodos();
     }
 
     @PostMapping
-    public ServicioMecanico crear(@RequestBody ServicioMecanicoRequest request) {
+    public ServicioMecanicoDTO crear(@RequestBody ServicioMecanicoDTO request) {
         return servicioService.guardar(request);
+        
     }
 
     @GetMapping("/{id}")
-    public Optional<ServicioMecanico> obtenerPorId(@PathVariable Integer id) {
+    public Optional<ServicioMecanicoDTO> obtenerPorId(@PathVariable Integer id) {
         return servicioService.obtenerPorId(id);
     }
 

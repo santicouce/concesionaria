@@ -28,14 +28,8 @@ public class ClienteService implements IClienteService {
         clienteEntity.setTelefono(cliente.getTelefono());
         clienteEntity.setDni(cliente.getDni());
         clienteRepository.save(clienteEntity);
-        ClienteDTO respuesta = new ClienteDTO();
-        respuesta.setId(clienteEntity.getId());
-        respuesta.setNombre(clienteEntity.getNombre());
-        respuesta.setApellido(clienteEntity.getApellido());
-        respuesta.setDni(clienteEntity.getDni());
-        respuesta.setTelefono(clienteEntity.getTelefono());
-
-        return respuesta;
+        cliente.setId(clienteEntity.getId());
+        return cliente;
     }
 
     @Override

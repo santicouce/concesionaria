@@ -15,6 +15,7 @@ public class ServicioMecanico {
     private LocalDate fecha;
     private Integer kilometraje;
     private Boolean enGarantia;
+    
 
     // Constructores
     public ServicioMecanico() {
@@ -57,7 +58,7 @@ public class ServicioMecanico {
     }
 
     public Boolean getEnGarantia() {
-        return enGarantia;
+        return this.enGarantia;
     }
 
     public void setEnGarantia(Boolean enGarantia) {

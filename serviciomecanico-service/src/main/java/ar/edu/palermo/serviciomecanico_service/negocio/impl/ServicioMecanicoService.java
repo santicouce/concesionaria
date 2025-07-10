@@ -3,7 +3,7 @@ package ar.edu.palermo.serviciomecanico_service.negocio.impl;
 import ar.edu.palermo.serviciomecanico_service.cliente.VehiculoClient;
 import ar.edu.palermo.serviciomecanico_service.cliente.VentaClient;
 import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
-import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoDTO;
 import ar.edu.palermo.serviciomecanico_service.dto.VehiculoDTO;
 import ar.edu.palermo.serviciomecanico_service.dto.VentaDTO;
 import ar.edu.palermo.serviciomecanico_service.exceptions.DatosInvalidosException;
@@ -34,7 +34,7 @@ public class ServicioMecanicoService implements IServicioMecanicoService {
     }
 
     @Override
-    public ServicioMecanico guardar(ServicioMecanicoRequest requestBody) {
+    public ServicioMecanicoDTO guardar(ServicioMecanicoDTO requestBody) {
         VehiculoDTO vehiculo = vehiculoClient.obtenerVehiculo(requestBody.getVehiculoId());
         if (vehiculo == null) {
             throw new VehiculoNotFoundException("Vehículo no encontrado");
@@ -53,17 +53,34 @@ public class ServicioMecanicoService implements IServicioMecanicoService {
         // Si la venta fue hace menos de tantos años, se permite el servicio
         boolean dentroDeGarantia = venta.getFecha().isAfter(LocalDate.now().minusYears(aniosDeGarantia));
         ServicioMecanico servicio = new ServicioMecanico(vehiculo.getId(), requestBody.getFecha(), requestBody.getKilometraje(), dentroDeGarantia);
-        return servicioRepository.save(servicio);
+        servicioRepository.save(servicio);
+        requestBody.setId(servicio.getId());
+        requestBody.setEnGarantia(dentroDeGarantia);
+        return requestBody;
     }
 
     @Override
-    public List<ServicioMecanico> obtenerTodos() {
-        return servicioRepository.findAll();
+    public List<ServicioMecanicoDTO> obtenerTodos() {
+        return servicioRepository.findAll()
+                .stream()
+                .map(servicio -> new ServicioMecanicoDTO(
+                        servicio.getId(),
+                        servicio.getEnGarantia(),
+                        servicio.getVehiculoId(),
+                        servicio.getFecha(),
+                        servicio.getKilometraje()))
+                .toList();
     }
 
     @Override
-    public Optional<ServicioMecanico> obtenerPorId(Integer id) {
-        return servicioRepository.findById(id);
+    public Optional<ServicioMecanicoDTO> obtenerPorId(Integer id) {
+        return servicioRepository.findById(id)
+                .map(servicio -> new ServicioMecanicoDTO(
+                        servicio.getId(),
+                        servicio.getEnGarantia(),
+                        servicio.getVehiculoId(),
+                        servicio.getFecha(),
+                        servicio.getKilometraje()));
     }
 
     @Override

@@ -1,18 +1,17 @@
 package ar.edu.palermo.serviciomecanico_service.negocio;
 
-import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
-import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IServicioMecanicoService {
 
-    ServicioMecanico guardar(ServicioMecanicoRequest requestBody);
+    ServicioMecanicoDTO guardar(ServicioMecanicoDTO requestBody);
 
-    List<ServicioMecanico> obtenerTodos();
+    List<ServicioMecanicoDTO> obtenerTodos();
 
-    Optional<ServicioMecanico> obtenerPorId(Integer id);
+    Optional<ServicioMecanicoDTO> obtenerPorId(Integer id);
 
     void eliminar(Integer id);
 
