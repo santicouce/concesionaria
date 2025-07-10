@@ -2,6 +2,7 @@ package ar.edu.palermo.empleado_service.negocio.impl;
 
 import ar.edu.palermo.empleado_service.cliente.SucursalClient;
 import ar.edu.palermo.empleado_service.dominio.Empleado;
+import ar.edu.palermo.empleado_service.dto.EmpleadoDTO;
 import ar.edu.palermo.empleado_service.exceptions.SucursalNotFoundException;
 import ar.edu.palermo.empleado_service.negocio.IEmpleadoService;
 import ar.edu.palermo.empleado_service.repositorio.EmpleadoRepository;
@@ -24,21 +25,50 @@ public class EmpleadoService implements IEmpleadoService {
     }
 
     @Override
-    public Empleado guardar(Empleado empleado) {
+    public EmpleadoDTO guardar(EmpleadoDTO empleado) {
         if (!sucursalClient.existeSucursal(empleado.getSucursalId())) {
             throw new SucursalNotFoundException("La sucursal no existe");
         }
-        return empleadoRepository.save(empleado);
+        Empleado nuevoEmpleado = new Empleado(empleado.getNombre(),
+                empleado.getApellido(),
+                empleado.getLegajo(),
+                empleado.getRol(),
+                empleado.getSucursalId());
+        empleadoRepository.save(nuevoEmpleado);
+        empleado.setId(nuevoEmpleado.getId());
+        return empleado;
     }
 
     @Override
-    public List<Empleado> obtenerTodos() {
-        return empleadoRepository.findAll();
+    public List<EmpleadoDTO> obtenerTodos() {
+        return empleadoRepository.findAll()
+                .stream()
+                .map(empleado -> {
+                    EmpleadoDTO dto = new EmpleadoDTO();
+                    dto.setId(empleado.getId());
+                    dto.setNombre(empleado.getNombre());
+                    dto.setApellido(empleado.getApellido());
+                    dto.setLegajo(empleado.getLegajo());
+                    dto.setRol(empleado.getRol());
+                    dto.setSucursalId(empleado.getSucursalId());
+                    return dto;
+                })
+                .toList();
     }
 
     @Override
-    public Optional<Empleado> obtenerPorId(Integer id) {
-        return empleadoRepository.findById(id);
+    public Optional<EmpleadoDTO> obtenerPorId(Integer id) {
+        return empleadoRepository.findById(id)
+                .map(empleado -> {
+                    EmpleadoDTO dto = new EmpleadoDTO();
+                    dto.setId(empleado.getId());
+                    dto.setNombre(empleado.getNombre());
+                    dto.setApellido(empleado.getApellido());
+                    dto.setLegajo(empleado.getLegajo());
+                    dto.setRol(empleado.getRol());
+                    dto.setSucursalId(empleado.getSucursalId());
+                    return dto;
+                });
     }
 
     @Override

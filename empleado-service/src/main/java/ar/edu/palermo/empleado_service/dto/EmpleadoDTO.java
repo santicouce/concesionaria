@@ -1,6 +1,8 @@
 package ar.edu.palermo.empleado_service.dto;
 
-public class EmpleadoRequest {
+public class EmpleadoDTO {
+
+    private Integer id;
     private String nombre;
     private String apellido;
     private String legajo;
@@ -8,6 +10,14 @@ public class EmpleadoRequest {
     private Integer sucursalId;
 
     // Getters y setters
+    public Integer getId() {
+        return id;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -20,7 +30,7 @@ public class EmpleadoRequest {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    public String getLegajo(String legajo){
+    public String getLegajo(){
         return legajo;
     }
     public void setLegajo(String legajo) {

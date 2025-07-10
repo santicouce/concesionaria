@@ -3,7 +3,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import ar.edu.palermo.empleado_service.cliente.SucursalClient;
-import ar.edu.palermo.empleado_service.dominio.Empleado;
+import ar.edu.palermo.empleado_service.dto.EmpleadoDTO;
 import ar.edu.palermo.empleado_service.dto.SucursalInfoDTO;
 import ar.edu.palermo.empleado_service.negocio.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +28,12 @@ public class EmpleadoControlador {
     }
 
     @GetMapping
-    public List<Empleado> obtenerTodos() {
+    public List<EmpleadoDTO> obtenerTodos() {
         return empleadoService.obtenerTodos();
     }
 
     @PostMapping
-    public Empleado crear(@RequestBody Empleado empleado) {
+    public EmpleadoDTO crear(@RequestBody EmpleadoDTO empleado) {
         return empleadoService.guardar(empleado);
     }
 
@@ -52,7 +52,7 @@ public class EmpleadoControlador {
     @GetMapping("/{id}/sucursal")
     public ResponseEntity<SucursalInfoDTO> obtenerSucursalPorId(@PathVariable Integer id) {
         // 1. Busco el empleado
-        Optional<Empleado> empleadoOpt = empleadoService.obtenerPorId(id);
+        Optional<EmpleadoDTO> empleadoOpt = empleadoService.obtenerPorId(id);
         if (empleadoOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

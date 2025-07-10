@@ -1,17 +1,17 @@
 package ar.edu.palermo.empleado_service.negocio;
 
-import ar.edu.palermo.empleado_service.dominio.Empleado;
+import ar.edu.palermo.empleado_service.dto.EmpleadoDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IEmpleadoService {
 
-    Empleado guardar(Empleado empleado);
+    EmpleadoDTO guardar(EmpleadoDTO empleado);
 
-    List<Empleado> obtenerTodos();
+    List<EmpleadoDTO> obtenerTodos();
 
-    Optional<Empleado> obtenerPorId(Integer id);
+    Optional<EmpleadoDTO> obtenerPorId(Integer id);
 
     void eliminar(Integer id);
 }
