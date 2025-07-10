@@ -1,13 +1,13 @@
-package ar.edu.palermo.concesionaria;
+package ar.edu.palermo.serviciomecanico_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ConcesionariaApplication {
+public class ServiciomecanicoServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConcesionariaApplication.class, args);
+		SpringApplication.run(ServiciomecanicoServiceApplication.class, args);
 	}
 
 }

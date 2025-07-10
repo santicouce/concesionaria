@@ -1,10 +1,10 @@
-package ar.edu.palermo.concesionaria;
+package ar.edu.palermo.serviciomecanico_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ConcesionariaApplicationTests {
+class ServiciomecanicoServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
