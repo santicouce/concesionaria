@@ -7,7 +7,7 @@ import ar.edu.palermo.venta_service.cliente.VehiculoClient;
 import ar.edu.palermo.venta_service.dominio.Venta;
 import ar.edu.palermo.venta_service.dto.StockInfoDTO;
 import ar.edu.palermo.venta_service.dto.SucursalInfoDTO;
-import ar.edu.palermo.venta_service.dto.VentaRequest;
+import ar.edu.palermo.venta_service.dto.VentaDTO;
 import ar.edu.palermo.venta_service.exceptions.ObjetoRelacionadoNoEncontradoException;
 import ar.edu.palermo.venta_service.exceptions.NegocioException;
 import ar.edu.palermo.venta_service.negocio.IVentaService;
@@ -46,7 +46,7 @@ public class VentaService implements IVentaService {
     }
 
     @Override
-    public void crearVenta(VentaRequest request) {
+    public void crearVenta(VentaDTO request) {
         // Validar existencia de entidades externas
         if (!clienteClient.existeCliente(request.getClienteId())) {
             throw new ObjetoRelacionadoNoEncontradoException("Cliente no encontrado");
@@ -63,16 +63,25 @@ public class VentaService implements IVentaService {
         Integer sucursalDeVentaId = sucursalDeVenta.getId();
         StockInfoDTO stockEnSucursalEmpleado = stockClient.findBySucursalAndVehiculo(request.getVehiculoId(), sucursalDeVentaId);
         StockInfoDTO stockEnSucursalCentral = stockClient.findByVehiculoInCentral(request.getVehiculoId());
-        boolean esVentaDeCentral = sucursalDeVenta.getEsCentral();
+        boolean esVentaDesDeCentral = sucursalDeVenta.getEsCentral();
         boolean sinStockCentral = stockEnSucursalCentral.getCantidad() <= 0;
-        if (esVentaDeCentral) {
+        boolean stockProvieneDeCentral = false;
+        if (esVentaDesDeCentral) {
+            System.out.println("Venta realizada desde la sucursal central.");
+            stockProvieneDeCentral = true;
             if (sinStockCentral) {
                 throw new NegocioException("No hay stock disponible.");
             }
         } else {
+            System.out.println("Venta realizada desde la sucursal: " + sucursalDeVenta.getId());
+            System.out.println("Stock en sucursal: " + stockEnSucursalEmpleado.getCantidad());
             boolean sinStockSucursal = stockEnSucursalEmpleado.getCantidad() <= 0;
             if (sinStockSucursal && sinStockCentral) {
                 throw new NegocioException("No hay stock disponible.");
+            }
+            if (sinStockSucursal && !sinStockCentral) {
+                System.out.println("No hay stock en la sucursal, se tomará de la central.");
+                stockProvieneDeCentral = true;
             }
         }
 
@@ -80,7 +89,7 @@ public class VentaService implements IVentaService {
         Integer diasDeEntrega = servicioEntrega.calcularTiempoEntrega(sucursalDeVenta, stockEnSucursalEmpleado);
         System.out.println("Días estimados de entrega: " + diasDeEntrega);
         // Descontar stock
-        if (!esVentaDeCentral) {
+        if (!stockProvieneDeCentral) {
             Integer stockId = stockEnSucursalEmpleado.getId();
             System.out.println("Descontando stock en sucursal: " + stockId);
             stockClient.decrementStock(stockId);
@@ -102,18 +111,41 @@ public class VentaService implements IVentaService {
     }
 
     @Override
-    public List<Venta> obtenerTodas() {
-        return ventaRepository.findAll();
+    public List<VentaDTO> obtenerTodas() {
+        return ventaRepository.findAll()
+                .stream()
+                .map(venta -> new VentaDTO(
+                        venta.getClienteId(),
+                        venta.getVehiculoId(),
+                        venta.getEmpleadoId(),
+                        venta.getFecha(),
+                        venta.getMonto()
+                ))
+                .toList();
     }
 
     @Override
-    public Optional<Venta> obtenerPorId(Integer id) {
-        return ventaRepository.findById(id);
+    public Optional<VentaDTO> obtenerPorId(Integer id) {
+        return ventaRepository.findById(id)
+                .map(venta -> new VentaDTO(
+                        venta.getClienteId(),
+                        venta.getVehiculoId(),
+                        venta.getEmpleadoId(),
+                        venta.getFecha(),
+                        venta.getMonto()
+                ));
     }
 
     @Override
-    public Optional<Venta> obtenerPorVehiculo(Integer idVehiculo) {
-        return ventaRepository.findByVehiculoId(idVehiculo);
+    public Optional<VentaDTO> obtenerPorVehiculo(Integer idVehiculo) {
+        return ventaRepository.findByVehiculoId(idVehiculo)
+                .map(venta -> new VentaDTO(
+                        venta.getClienteId(),
+                        venta.getVehiculoId(),
+                        venta.getEmpleadoId(),
+                        venta.getFecha(),
+                        venta.getMonto()
+                ));
     }
 
     @Override

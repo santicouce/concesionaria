@@ -1,9 +1,7 @@
 package ar.edu.palermo.venta_service.controlador;
 
-import ar.edu.palermo.venta_service.dominio.Venta;
-import ar.edu.palermo.venta_service.dto.VentaRequest;
+import ar.edu.palermo.venta_service.dto.VentaDTO;
 import ar.edu.palermo.venta_service.exceptions.NegocioException;
-import ar.edu.palermo.venta_service.exceptions.ObjetoRelacionadoNoEncontradoException;
 import ar.edu.palermo.venta_service.negocio.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,18 +23,18 @@ public class VentaControlador {
     }
 
     @GetMapping
-    public List<Venta> obtenerTodas() {
+    public List<VentaDTO> obtenerTodas() {
         return ventaService.obtenerTodas();
     }
 
     @PostMapping
-    public ResponseEntity<Void> crearVenta(@RequestBody VentaRequest request) {
+    public ResponseEntity<Void> crearVenta(@RequestBody VentaDTO request) {
         ventaService.crearVenta(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}")
-    public Optional<Venta> obtenerPorId(@PathVariable Integer id) {
+    public Optional<VentaDTO> obtenerPorId(@PathVariable Integer id) {
         return ventaService.obtenerPorId(id);
     }
 
@@ -45,8 +43,8 @@ public class VentaControlador {
         ventaService.eliminar(id);
     }
     @GetMapping("/vehiculo/{idVehiculo}")
-    public Venta obtenerPorVehiculo(@PathVariable Integer idVehiculo) {
-        Optional<Venta> opventa = ventaService.obtenerPorVehiculo(idVehiculo);
+    public VentaDTO obtenerPorVehiculo(@PathVariable Integer idVehiculo) {
+        Optional<VentaDTO> opventa = ventaService.obtenerPorVehiculo(idVehiculo);
         System.out.println("Buscando venta para vehículo con ID: " + idVehiculo);
         if (opventa.isPresent()) {
             return opventa.get();
