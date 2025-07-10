@@ -3,6 +3,7 @@ package ar.edu.palermo.stock_service.negocio.impl;
 import ar.edu.palermo.stock_service.cliente.SucursalClient;
 import ar.edu.palermo.stock_service.cliente.VehiculoClient;
 import ar.edu.palermo.stock_service.dominio.Stock;
+import ar.edu.palermo.stock_service.dto.StockDTO;
 import ar.edu.palermo.stock_service.negocio.IStockService;
 import ar.edu.palermo.stock_service.repositorio.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,24 +34,43 @@ public class StockService implements IStockService {
     }
 
     @Override
-    public Stock guardar(Stock stock) {
+    public StockDTO guardar(StockDTO stock) {
         if (!sucursalClient.existeSucursal(stock.getSucursalId())) {
             throw new SucursalNotFoundException("La sucursal con ID " + stock.getSucursalId() + " no existe");
         }
         if (!vehiculoClient.existeVehiculo(stock.getVehiculoId())) {
             throw new VehiculoNotFoundException("El vehículo con ID " + stock.getVehiculoId() + " no existe");
         }
-        return stockRepository.save(stock);
+        Stock stockEntity = new Stock(
+                stock.getSucursalId(),
+                stock.getVehiculoId(),
+                stock.getCantidad()
+                );
+        stockRepository.save(stockEntity);
+        stock.setId(stockEntity.getId());
+        return stock;
     }
 
     @Override
-    public List<Stock> obtenerTodos() {
-        return stockRepository.findAll();
+    public List<StockDTO> obtenerTodos() {
+        return stockRepository.findAll()
+            .stream()
+            .map(stock -> new StockDTO(
+                stock.getId(),
+                stock.getSucursalId(),
+                stock.getVehiculoId(),
+                stock.getCantidad()))
+            .toList();
     }
 
     @Override
-    public Optional<Stock> obtenerPorId(Integer id) {
-        return stockRepository.findById(id);
+    public Optional<StockDTO> obtenerPorId(Integer id) {
+        return stockRepository.findById(id)
+            .map(stock -> new StockDTO(
+                stock.getId(),
+                stock.getSucursalId(),
+                stock.getVehiculoId(),
+                stock.getCantidad()));
     }
 
     @Override
@@ -59,12 +79,17 @@ public class StockService implements IStockService {
     }
 
     @Override
-    public Optional<Stock> buscarPorSucursalYVehiculo(Integer sucursalId, Integer vehiculoId) {
-        return stockRepository.findBySucursalIdAndVehiculoId(sucursalId, vehiculoId);
+    public Optional<StockDTO> buscarPorSucursalYVehiculo(Integer sucursalId, Integer vehiculoId) {
+        return stockRepository.findBySucursalIdAndVehiculoId(sucursalId, vehiculoId)
+            .map(stock -> new StockDTO(
+                stock.getId(),
+                stock.getSucursalId(),
+                stock.getVehiculoId(),
+                stock.getCantidad()));
     }
 
     @Override
-    public Optional<Stock> decrementarStock(Integer stockId) {
+    public Optional<StockDTO> decrementarStock(Integer stockId) {
         return stockRepository.findById(stockId)
             .map(stock -> {
                 int cantidadActual = stock.getCantidad();
@@ -74,6 +99,12 @@ public class StockService implements IStockService {
                 }
                 stock.setCantidad(cantidadActual - 1);
                 return stockRepository.save(stock);
-            });
+            })
+            .map(actualizado -> new StockDTO(
+                actualizado.getId(),
+                actualizado.getSucursalId(),
+                actualizado.getVehiculoId(),
+                actualizado.getCantidad()
+            ));
     }
 }
