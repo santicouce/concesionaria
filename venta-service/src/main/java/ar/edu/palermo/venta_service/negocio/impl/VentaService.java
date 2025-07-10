@@ -112,6 +112,11 @@ public class VentaService implements IVentaService {
     }
 
     @Override
+    public Optional<Venta> obtenerPorVehiculo(Integer idVehiculo) {
+        return ventaRepository.findByVehiculoId(idVehiculo);
+    }
+
+    @Override
     public void eliminar(Integer id) {
         ventaRepository.deleteById(id);
     }

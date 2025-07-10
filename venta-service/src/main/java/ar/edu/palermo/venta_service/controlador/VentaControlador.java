@@ -2,6 +2,8 @@ package ar.edu.palermo.venta_service.controlador;
 
 import ar.edu.palermo.venta_service.dominio.Venta;
 import ar.edu.palermo.venta_service.dto.VentaRequest;
+import ar.edu.palermo.venta_service.exceptions.NegocioException;
+import ar.edu.palermo.venta_service.exceptions.ObjetoRelacionadoNoEncontradoException;
 import ar.edu.palermo.venta_service.negocio.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,5 +43,14 @@ public class VentaControlador {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Integer id) {
         ventaService.eliminar(id);
+    }
+    @GetMapping("/vehiculo/{idVehiculo}")
+    public Venta obtenerPorVehiculo(@PathVariable Integer idVehiculo) {
+        Optional<Venta> opventa = ventaService.obtenerPorVehiculo(idVehiculo);
+        if (opventa.isPresent()) {
+            return opventa.get();
+        } else {
+            throw new NegocioException("Venta no encontrada para el vehículo con ID: " + idVehiculo);
+        }
     }
 }

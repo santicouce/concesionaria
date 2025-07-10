@@ -1,8 +1,8 @@
-package ar.edu.palermo.concesionaria.controlador;
+package ar.edu.palermo.serviciomecanico_service.controlador;
 
-import ar.edu.palermo.concesionaria.dominio.ServicioMecanico;
-import ar.edu.palermo.concesionaria.dto.ServicioMecanicoRequest;
-import ar.edu.palermo.concesionaria.negocio.IServicioMecanicoService;
+import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.negocio.IServicioMecanicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

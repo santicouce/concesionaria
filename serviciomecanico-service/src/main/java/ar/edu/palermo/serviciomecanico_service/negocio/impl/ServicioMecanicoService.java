@@ -1,17 +1,16 @@
-package ar.edu.palermo.concesionaria.negocio.impl;
+package ar.edu.palermo.serviciomecanico_service.negocio.impl;
 
-import ar.edu.palermo.concesionaria.dominio.Cliente;
-import ar.edu.palermo.concesionaria.dominio.ServicioMecanico;
-import ar.edu.palermo.concesionaria.dominio.Vehiculo;
-import ar.edu.palermo.concesionaria.dominio.Venta;
-import ar.edu.palermo.concesionaria.dto.ServicioMecanicoRequest;
-import ar.edu.palermo.concesionaria.exceptions.DatosInvalidosException;
-import ar.edu.palermo.concesionaria.exceptions.NegocioException;
-import ar.edu.palermo.concesionaria.negocio.IServicioMecanicoService;
-import ar.edu.palermo.concesionaria.repositorio.ClienteRepository;
-import ar.edu.palermo.concesionaria.repositorio.ServicioMecanicoRepository;
-import ar.edu.palermo.concesionaria.repositorio.VehiculoRepository;
-import ar.edu.palermo.concesionaria.repositorio.VentaRepository;
+import ar.edu.palermo.serviciomecanico_service.cliente.VehiculoClient;
+import ar.edu.palermo.serviciomecanico_service.cliente.VentaClient;
+import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.dto.VehiculoDTO;
+import ar.edu.palermo.serviciomecanico_service.dto.VentaDTO;
+import ar.edu.palermo.serviciomecanico_service.exceptions.DatosInvalidosException;
+import ar.edu.palermo.serviciomecanico_service.exceptions.VehiculoNotFoundException;
+import ar.edu.palermo.serviciomecanico_service.negocio.IServicioMecanicoService;
+import ar.edu.palermo.serviciomecanico_service.repositorio.ServicioMecanicoRepository;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,26 +23,24 @@ import java.util.Optional;
 public class ServicioMecanicoService implements IServicioMecanicoService {
 
     private final ServicioMecanicoRepository servicioRepository;
-    private final VehiculoRepository vehiculoRepository;
-    private final VentaRepository ventaRepository;
-    private final ClienteRepository clienteRepository;
+    private final VehiculoClient vehiculoClient;
+    private final VentaClient ventaClient;
 
     @Autowired
-    public ServicioMecanicoService(ServicioMecanicoRepository servicioRepository, VehiculoRepository vehiculoRepository, VentaRepository ventaRepository, ClienteRepository clienteRepository) {
+    public ServicioMecanicoService(ServicioMecanicoRepository servicioRepository, VehiculoClient vehiculoClient, VentaClient ventaClient) {
         this.servicioRepository = servicioRepository;
-        this.vehiculoRepository = vehiculoRepository;
-        this.ventaRepository = ventaRepository;
-        this.clienteRepository = clienteRepository;
+        this.vehiculoClient = vehiculoClient;
+        this.ventaClient = ventaClient;
     }
 
     @Override
     public ServicioMecanico guardar(ServicioMecanicoRequest requestBody) {
-        Vehiculo vehiculo = vehiculoRepository.findById(requestBody.getVehiculoId())
-                .orElseThrow(() -> new DatosInvalidosException("Vehiculo no encontrado"));
-        Venta venta = ventaRepository.findByVehiculoId(vehiculo.getId())
-                .orElseThrow(() -> new NegocioException("No se encontró una venta asociada al vehículo"));
-        Cliente cliente = clienteRepository.findById(requestBody.getClienteId())
-                .orElseThrow(() -> new DatosInvalidosException("Cliente no encontrado"));
+        VehiculoDTO vehiculo = vehiculoClient.obtenerVehiculo(requestBody.getVehiculoId());
+        if (vehiculo == null) {
+            throw new VehiculoNotFoundException("Vehículo no encontrado");
+        }
+        VentaDTO venta = ventaClient.obtenerVentaPorVehiculo(requestBody.getVehiculoId());
+        
         if (requestBody.getFecha().isAfter(LocalDate.now())) {
             throw new DatosInvalidosException("La fecha del servicio no puede ser futura.");
         }
@@ -53,7 +50,7 @@ public class ServicioMecanicoService implements IServicioMecanicoService {
         int aniosDeGarantia = aniosDeGarantiaSegunTipo(vehiculo.getTipo());
         // Si la venta fue hace menos de tantos años, se permite el servicio
         boolean dentroDeGarantia = venta.getFecha().isAfter(LocalDate.now().minusYears(aniosDeGarantia));
-        ServicioMecanico servicio = new ServicioMecanico(cliente, vehiculo, requestBody.getFecha(), requestBody.getKilometraje(), dentroDeGarantia);
+        ServicioMecanico servicio = new ServicioMecanico(vehiculo.getId(), requestBody.getFecha(), requestBody.getKilometraje(), dentroDeGarantia);
         return servicioRepository.save(servicio);
     }
 

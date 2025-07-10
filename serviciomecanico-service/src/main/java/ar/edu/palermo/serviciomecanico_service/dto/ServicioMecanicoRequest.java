@@ -1,17 +1,15 @@
-package ar.edu.palermo.concesionaria.dto;
+package ar.edu.palermo.serviciomecanico_service.dto;
 
 import java.time.LocalDate;
 
 public class ServicioMecanicoRequest {
-    // Creo esta clase para poder recibir los primary keys de las entidades relacionadas
-    // y asi luego poder buscar los objetos correspondientes en la base de datos.
+
     private Integer clienteId;
     private Integer vehiculoId;
-    private Integer kilometraje;
     private LocalDate fecha;
+    private Integer kilometraje;
 
     // Getters y Setters
-
     public Integer getClienteId() {
         return clienteId;
     }
@@ -28,19 +26,19 @@ public class ServicioMecanicoRequest {
         this.vehiculoId = vehiculoId;
     }
 
-    public Integer getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(Integer kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-
     public LocalDate getFecha() {
         return fecha;
     }
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Integer getKilometraje() {
+        return kilometraje;
+    }
+
+    public void setKilometraje(Integer kilometraje) {
+        this.kilometraje = kilometraje;
     }
 }

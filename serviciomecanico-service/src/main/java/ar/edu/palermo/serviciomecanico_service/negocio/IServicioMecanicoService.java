@@ -1,7 +1,7 @@
-package ar.edu.palermo.concesionaria.negocio;
+package ar.edu.palermo.serviciomecanico_service.negocio;
 
-import ar.edu.palermo.concesionaria.dominio.ServicioMecanico;
-import ar.edu.palermo.concesionaria.dto.ServicioMecanicoRequest;
+import ar.edu.palermo.serviciomecanico_service.dominio.ServicioMecanico;
+import ar.edu.palermo.serviciomecanico_service.dto.ServicioMecanicoRequest;
 
 import java.util.List;
 import java.util.Optional;

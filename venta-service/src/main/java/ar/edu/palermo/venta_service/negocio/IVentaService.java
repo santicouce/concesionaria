@@ -12,6 +12,8 @@ public interface IVentaService {
 
     Optional<Venta> obtenerPorId(Integer id);
 
+    Optional<Venta> obtenerPorVehiculo(Integer idVehiculo);
+
     void eliminar(Integer id);
 
     void crearVenta(VentaRequest request);

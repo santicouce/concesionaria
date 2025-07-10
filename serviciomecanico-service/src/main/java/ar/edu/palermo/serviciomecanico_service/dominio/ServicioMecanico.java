@@ -1,4 +1,4 @@
-package ar.edu.palermo.concesionaria.dominio;
+package ar.edu.palermo.serviciomecanico_service.dominio;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -10,13 +10,7 @@ public class ServicioMecanico {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "vehiculo_id")
-    private Vehiculo vehiculo;
+    private Integer vehiculoId;
 
     private LocalDate fecha;
     private Integer kilometraje;
@@ -26,9 +20,8 @@ public class ServicioMecanico {
     public ServicioMecanico() {
     }
 
-    public ServicioMecanico(Cliente cliente, Vehiculo vehiculo, LocalDate fecha, Integer kilometraje, Boolean enGarantia) {
-        setCliente(cliente);
-        setVehiculo(vehiculo);
+    public ServicioMecanico(Integer vehiculoId, LocalDate fecha, Integer kilometraje, Boolean enGarantia) {
+        setVehiculoId(vehiculoId);
         setFecha(fecha);
         setKilometraje(kilometraje);
         setEnGarantia(enGarantia);
@@ -39,20 +32,12 @@ public class ServicioMecanico {
         return id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Integer getVehiculoId() {
+        return vehiculoId;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Vehiculo getVehiculo() {
-        return vehiculo;
-    }
-
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setVehiculoId(Integer vehiculoId) {
+        this.vehiculoId = vehiculoId;
     }
 
     public LocalDate getFecha() {
