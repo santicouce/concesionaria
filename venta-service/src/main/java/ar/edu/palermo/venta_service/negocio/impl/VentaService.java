@@ -61,7 +61,10 @@ public class VentaService implements IVentaService {
         // Validar existencia de stock
         SucursalInfoDTO sucursalDeVenta = empleadoClient.obtenerSucursal(request.getEmpleadoId());
         Integer sucursalDeVentaId = sucursalDeVenta.getId();
+        System.out.println("Sucursal de venta: " + sucursalDeVentaId);
+        System.out.println("Vehículo ID: " + request.getVehiculoId());
         StockInfoDTO stockEnSucursalEmpleado = stockClient.findBySucursalAndVehiculo(request.getVehiculoId(), sucursalDeVentaId);
+        System.out.println("id Stock en sucursal del empleado: " + stockEnSucursalEmpleado.getId());
         StockInfoDTO stockEnSucursalCentral = stockClient.findByVehiculoInCentral(request.getVehiculoId());
         boolean esVentaDesDeCentral = sucursalDeVenta.getEsCentral();
         boolean sinStockCentral = stockEnSucursalCentral.getCantidad() <= 0;

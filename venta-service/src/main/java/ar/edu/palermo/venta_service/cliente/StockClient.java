@@ -1,13 +1,10 @@
 package ar.edu.palermo.venta_service.cliente;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 
 import ar.edu.palermo.venta_service.dto.StockInfoDTO;
 
@@ -26,15 +23,18 @@ public class StockClient {
                 .encode();
 
         try {
-            StockInfoDTO resp = restTemplate.getForObject(
+            StockInfoDTO[] arr = restTemplate.getForObject(
                 uri.toUriString(),
-                StockInfoDTO.class
+                StockInfoDTO[].class
             );
-            // si el servicio te devuelve null (body vacío), devolvemos un DTO con cantidad=0
-            return (resp != null ? resp : new StockInfoDTO(0,0));
+            if (arr != null && arr.length > 0) {
+                return arr[0];
+            } else {
+                return new StockInfoDTO(0, vehiculoId, sucursalId, 0);
+            }
         } catch (RestClientException e) {
-            // en caso de error devolvemos también un DTO con cantidad=0
-            return new StockInfoDTO(0,0);
+            System.err.println("Error al consultar stock: " + e.getMessage());
+            return new StockInfoDTO(0, vehiculoId, sucursalId, 0);
         }
     }
 
@@ -46,27 +46,27 @@ public class StockClient {
                 .encode();
 
         try {
-            StockInfoDTO resp = restTemplate.getForObject(
+            StockInfoDTO[] arr = restTemplate.getForObject(
                 uri.toUriString(),
-                StockInfoDTO.class
+                StockInfoDTO[].class
             );
-            return (resp != null ? resp : new StockInfoDTO(0,0));
+            if (arr != null && arr.length > 0) {
+                return arr[0];
+            } else {
+                return new StockInfoDTO(0, vehiculoId, null, 0);
+            }
         } catch (RestClientException e) {
-            return new StockInfoDTO(0,0);
+            return new StockInfoDTO(0, vehiculoId, null, 0);
         }
     }
 
     public boolean decrementStock(Integer stockId) {
         String url = STOCK_URL + "/" + stockId + "/venta";
         try {
-            ResponseEntity<Void> response =
-                restTemplate.postForEntity(url, null, Void.class);
-            return response.getStatusCode().is2xxSuccessful();
+            restTemplate.postForEntity(url, null, Void.class);
+            return true;
         } catch (RestClientException e) {
-            // 4xx/5xx
             return false;
         }
     }
-
-    
 }

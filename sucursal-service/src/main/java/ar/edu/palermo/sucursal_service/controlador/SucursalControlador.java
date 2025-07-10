@@ -1,6 +1,5 @@
 package ar.edu.palermo.sucursal_service.controlador;
 import org.springframework.http.HttpStatus;
-import ar.edu.palermo.sucursal_service.dominio.Sucursal;
 import ar.edu.palermo.sucursal_service.dto.SucursalDTO;
 import ar.edu.palermo.sucursal_service.negocio.ISucursalService;
 

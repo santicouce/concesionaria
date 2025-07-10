@@ -1,11 +1,12 @@
 package ar.edu.palermo.cliente_service.controlador;
 
 import ar.edu.palermo.cliente_service.dto.ClienteDTO;
+import ar.edu.palermo.cliente_service.exceptions.ObjetoRelacionadoNoEncontrado;
 import ar.edu.palermo.cliente_service.negocio.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -25,18 +26,20 @@ public class ClienteControlador {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ClienteDTO crear(@RequestBody ClienteDTO cliente) {
         return clienteService.guardar(cliente);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerPorId(@PathVariable Integer id) {
+    public ClienteDTO obtenerPorId(@PathVariable Integer id) {
         return clienteService.obtenerPorId(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrada"));
+            .orElseThrow(() -> new ObjetoRelacionadoNoEncontrado(
+                "Cliente no encontrado (id=" + id + ")"));
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Integer id) {
         clienteService.eliminar(id);
     }

@@ -3,7 +3,7 @@ package ar.edu.palermo.empleado_service.negocio.impl;
 import ar.edu.palermo.empleado_service.cliente.SucursalClient;
 import ar.edu.palermo.empleado_service.dominio.Empleado;
 import ar.edu.palermo.empleado_service.dto.EmpleadoDTO;
-import ar.edu.palermo.empleado_service.exceptions.SucursalNotFoundException;
+import ar.edu.palermo.empleado_service.exceptions.ObjetoRelacionadoNoEncontrado;
 import ar.edu.palermo.empleado_service.negocio.IEmpleadoService;
 import ar.edu.palermo.empleado_service.repositorio.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class EmpleadoService implements IEmpleadoService {
     @Override
     public EmpleadoDTO guardar(EmpleadoDTO empleado) {
         if (!sucursalClient.existeSucursal(empleado.getSucursalId())) {
-            throw new SucursalNotFoundException("La sucursal no existe");
+            throw new ObjetoRelacionadoNoEncontrado("La sucursal no existe");
         }
         Empleado nuevoEmpleado = new Empleado(empleado.getNombre(),
                 empleado.getApellido(),

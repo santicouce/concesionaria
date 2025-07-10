@@ -1,10 +1,10 @@
 package ar.edu.palermo.vehiculo_service.controlador;
-import org.springframework.http.HttpStatus;
 import ar.edu.palermo.vehiculo_service.dto.VehiculoDTO;
 import ar.edu.palermo.vehiculo_service.negocio.IVehiculoService;
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 
@@ -30,10 +30,10 @@ public class VehiculoControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerPorId(@PathVariable Integer id) {
-        return vehiculoService.obtenerPorId(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehiculo no encontrada"));
+    public VehiculoDTO obtener(@PathVariable Integer id) {
+        return vehiculoService
+                .obtenerPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No existe"));
     }
 
     @DeleteMapping("/{id}")
