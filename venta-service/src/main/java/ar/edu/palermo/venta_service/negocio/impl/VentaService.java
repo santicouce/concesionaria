@@ -58,6 +58,10 @@ public class VentaService implements IVentaService {
             throw new ObjetoRelacionadoNoEncontradoException("Empleado no encontrado");
         }
 
+        if (ventaRepository.findByVehiculoId(request.getVehiculoId()).isPresent()) {
+            throw new NegocioException("El vehículo ya ha sido vendido.");
+        }
+
         // Validar existencia de stock
         SucursalInfoDTO sucursalDeVenta = empleadoClient.obtenerSucursal(request.getEmpleadoId());
         Integer sucursalDeVentaId = sucursalDeVenta.getId();
@@ -65,6 +69,7 @@ public class VentaService implements IVentaService {
         System.out.println("Vehículo ID: " + request.getVehiculoId());
         StockInfoDTO stockEnSucursalEmpleado = stockClient.findBySucursalAndVehiculo(request.getVehiculoId(), sucursalDeVentaId);
         System.out.println("id Stock en sucursal del empleado: " + stockEnSucursalEmpleado.getId());
+        
         StockInfoDTO stockEnSucursalCentral = stockClient.findByVehiculoInCentral(request.getVehiculoId());
         boolean esVentaDesDeCentral = sucursalDeVenta.getEsCentral();
         boolean sinStockCentral = stockEnSucursalCentral.getCantidad() <= 0;
@@ -73,6 +78,7 @@ public class VentaService implements IVentaService {
             System.out.println("Venta realizada desde la sucursal central.");
             stockProvieneDeCentral = true;
             if (sinStockCentral) {
+                System.out.println("No hay stock en la sucursal central.");
                 throw new NegocioException("No hay stock disponible.");
             }
         } else {

@@ -28,7 +28,13 @@ public class StockClient {
                 StockInfoDTO[].class
             );
             if (arr != null && arr.length > 0) {
-                return arr[0];
+                System.out.println("Stock encontrado: " + arr[0].getCantidad());
+                StockInfoDTO stockInfo = new StockInfoDTO();
+                stockInfo.setId(arr[0].getId());
+                stockInfo.setVehiculoId(vehiculoId);
+                stockInfo.setSucursalId(sucursalId);
+                stockInfo.setCantidad(arr[0].getCantidad());
+                return stockInfo;
             } else {
                 return new StockInfoDTO(0, vehiculoId, sucursalId, 0);
             }
@@ -45,19 +51,11 @@ public class StockClient {
                 .build()
                 .encode();
 
-        try {
-            StockInfoDTO[] arr = restTemplate.getForObject(
-                uri.toUriString(),
-                StockInfoDTO[].class
-            );
-            if (arr != null && arr.length > 0) {
-                return arr[0];
-            } else {
-                return new StockInfoDTO(0, vehiculoId, null, 0);
-            }
-        } catch (RestClientException e) {
-            return new StockInfoDTO(0, vehiculoId, null, 0);
-        }
+        StockInfoDTO stockInfo = restTemplate.getForObject(
+            uri.toUriString(),
+            StockInfoDTO.class
+        );
+        return stockInfo;
     }
 
     public boolean decrementStock(Integer stockId) {
