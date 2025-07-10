@@ -1,17 +1,17 @@
 package ar.edu.palermo.vehiculo_service.negocio;
 
-import ar.edu.palermo.vehiculo_service.dominio.Vehiculo;
+import ar.edu.palermo.vehiculo_service.dto.VehiculoDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IVehiculoService {
 
-    Vehiculo guardar(Vehiculo vehiculo);
+    VehiculoDTO guardar(VehiculoDTO vehiculo);
 
-    List<Vehiculo> obtenerTodos();
+    List<VehiculoDTO> obtenerTodos();
 
-    Optional<Vehiculo> obtenerPorId(Integer id);
+    Optional<VehiculoDTO> obtenerPorId(Integer id);
 
     void eliminar(Integer id);
 }

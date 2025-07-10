@@ -1,6 +1,6 @@
 package ar.edu.palermo.vehiculo_service.controlador;
 import org.springframework.http.HttpStatus;
-import ar.edu.palermo.vehiculo_service.dominio.Vehiculo;
+import ar.edu.palermo.vehiculo_service.dto.VehiculoDTO;
 import ar.edu.palermo.vehiculo_service.negocio.IVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +20,12 @@ public class VehiculoControlador {
     }
 
     @GetMapping
-    public List<Vehiculo> obtenerTodos() {
+    public List<VehiculoDTO> obtenerTodos() {
         return vehiculoService.obtenerTodos();
     }
 
     @PostMapping
-    public Vehiculo crear(@RequestBody Vehiculo vehiculo) {
+    public VehiculoDTO crear(@RequestBody VehiculoDTO vehiculo) {
         return vehiculoService.guardar(vehiculo);
     }
 
