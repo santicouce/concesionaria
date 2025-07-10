@@ -47,6 +47,7 @@ public class VentaControlador {
     @GetMapping("/vehiculo/{idVehiculo}")
     public Venta obtenerPorVehiculo(@PathVariable Integer idVehiculo) {
         Optional<Venta> opventa = ventaService.obtenerPorVehiculo(idVehiculo);
+        System.out.println("Buscando venta para vehículo con ID: " + idVehiculo);
         if (opventa.isPresent()) {
             return opventa.get();
         } else {

@@ -40,7 +40,9 @@ public class ServicioMecanicoService implements IServicioMecanicoService {
             throw new VehiculoNotFoundException("Vehículo no encontrado");
         }
         VentaDTO venta = ventaClient.obtenerVentaPorVehiculo(requestBody.getVehiculoId());
-        
+        if (venta == null) {
+            throw new DatosInvalidosException("No se encontró una venta asociada al vehículo.");
+        }
         if (requestBody.getFecha().isAfter(LocalDate.now())) {
             throw new DatosInvalidosException("La fecha del servicio no puede ser futura.");
         }

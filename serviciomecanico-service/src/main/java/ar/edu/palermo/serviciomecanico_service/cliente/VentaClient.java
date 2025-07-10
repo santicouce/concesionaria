@@ -13,9 +13,10 @@ public class VentaClient {
     public VentaDTO obtenerVentaPorVehiculo(Integer vehiculoId) {
         try {
             ResponseEntity<VentaDTO> response = restTemplate.getForEntity(
-                "http://localhost:8084/ventas/vehiculo/" + vehiculoId, VentaDTO.class);
+                "http://localhost:8085/ventas/vehiculo/" + vehiculoId, VentaDTO.class);
             return response.getBody();
         } catch (Exception e) {
+            System.err.println("Error al obtener la venta: " + e.getMessage());
             return null;
         }
     }
