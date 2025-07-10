@@ -1,19 +1,19 @@
 package ar.edu.palermo.sucursal_service.negocio;
 
-import ar.edu.palermo.sucursal_service.dominio.Sucursal;
+import ar.edu.palermo.sucursal_service.dto.SucursalDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ISucursalService {
 
-    Sucursal guardar(Sucursal sucursal);
+    SucursalDTO guardar(SucursalDTO sucursal);
 
-    List<Sucursal> obtenerTodas();
+    List<SucursalDTO> obtenerTodas();
 
-    Optional<Sucursal> obtenerPorId(Integer id);
+    Optional<SucursalDTO> obtenerPorId(Integer id);
 
     void eliminar(Integer id);
 
-    Optional<Sucursal> obtenerCentral();
+    Optional<SucursalDTO> obtenerCentral();
 }

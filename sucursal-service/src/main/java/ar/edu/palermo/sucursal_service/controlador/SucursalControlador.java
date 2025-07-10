@@ -1,8 +1,8 @@
 package ar.edu.palermo.sucursal_service.controlador;
 import org.springframework.http.HttpStatus;
 import ar.edu.palermo.sucursal_service.dominio.Sucursal;
+import ar.edu.palermo.sucursal_service.dto.SucursalDTO;
 import ar.edu.palermo.sucursal_service.negocio.ISucursalService;
-import ar.edu.palermo.sucursal_service.repositorio.SucursalRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +23,12 @@ public class SucursalControlador {
     }
 
     @GetMapping
-    public List<Sucursal> obtenerTodas() {
+    public List<SucursalDTO> obtenerTodas() {
         return sucursalService.obtenerTodas();
     }
 
     @PostMapping
-    public Sucursal crear(@RequestBody Sucursal sucursal) {
+    public SucursalDTO crear(@RequestBody SucursalDTO sucursal) {
         return sucursalService.guardar(sucursal);
     }
 
@@ -46,7 +46,7 @@ public class SucursalControlador {
 
     @GetMapping("/central")
     public ResponseEntity<Integer> obtenerIdSucursalCentral() {
-        Optional<Sucursal> sucursalCentral = sucursalService.obtenerCentral();
+        Optional<SucursalDTO> sucursalCentral = sucursalService.obtenerCentral();
         return sucursalCentral
             .map(sucursal -> ResponseEntity.ok(sucursal.getId()))
             .orElseGet(() -> ResponseEntity.notFound().build());

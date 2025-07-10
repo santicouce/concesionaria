@@ -1,6 +1,7 @@
 package ar.edu.palermo.sucursal_service.negocio.impl;
 
 import ar.edu.palermo.sucursal_service.dominio.Sucursal;
+import ar.edu.palermo.sucursal_service.dto.SucursalDTO;
 import ar.edu.palermo.sucursal_service.exceptions.DatosInvalidosException;
 import ar.edu.palermo.sucursal_service.negocio.ISucursalService;
 import ar.edu.palermo.sucursal_service.repositorio.SucursalRepository;
@@ -21,19 +22,58 @@ public class SucursalService implements ISucursalService {
     }
 
     @Override
-    public Sucursal guardar(Sucursal sucursal) {
+    public SucursalDTO guardar(SucursalDTO sucursal) {
         validarDatosSucursal(sucursal);
-        return sucursalRepository.save(sucursal);
+        Sucursal nuevaSucursal = new Sucursal(sucursal.getNombre(),
+                sucursal.getDireccion(),
+                sucursal.getLocalidad(),
+                sucursal.getProvincia(),
+                sucursal.getPais(),
+                sucursal.getFechaApertura(),
+                sucursal.getDiasEntregaCliente(),
+                sucursal.getDiasEntregaDesdeCentral(),
+                sucursal.getEsCentral());
+        sucursalRepository.save(nuevaSucursal);
+        sucursal.setId(nuevaSucursal.getId());
+        return sucursal;
     }
 
     @Override
-    public List<Sucursal> obtenerTodas() {
-        return sucursalRepository.findAll();
+    public List<SucursalDTO> obtenerTodas() {
+        return sucursalRepository.findAll()
+                .stream()
+                .map(sucursal -> {
+                    SucursalDTO dto = new SucursalDTO();
+                    dto.setId(sucursal.getId());
+                    dto.setNombre(sucursal.getNombre());
+                    dto.setDireccion(sucursal.getDireccion());
+                    dto.setLocalidad(sucursal.getLocalidad());
+                    dto.setProvincia(sucursal.getProvincia());
+                    dto.setPais(sucursal.getPais());
+                    dto.setDiasEntregaCliente(sucursal.getDiasEntregaCliente());
+                    dto.setDiasEntregaDesdeCentral(sucursal.getDiasEntregaDesdeCentral());
+                    dto.setEsCentral(sucursal.getEsCentral());
+                    return dto;
+                })
+                .toList();
     }
 
     @Override
-    public Optional<Sucursal> obtenerPorId(Integer id) {
-        return sucursalRepository.findById(id);
+    public Optional<SucursalDTO> obtenerPorId(Integer id) {
+        return sucursalRepository.findById(id)
+                .map(sucursal -> {
+                    SucursalDTO dto = new SucursalDTO();
+                    dto.setId(sucursal.getId());
+                    dto.setNombre(sucursal.getNombre());
+                    dto.setDireccion(sucursal.getDireccion());
+                    dto.setLocalidad(sucursal.getLocalidad());
+                    dto.setProvincia(sucursal.getProvincia());
+                    dto.setPais(sucursal.getPais());
+                    dto.setDiasEntregaCliente(sucursal.getDiasEntregaCliente());
+                    dto.setDiasEntregaDesdeCentral(sucursal.getDiasEntregaDesdeCentral());
+                    dto.setEsCentral(sucursal.getEsCentral());
+                    return dto;
+                });
     }
 
     @Override
@@ -42,7 +82,7 @@ public class SucursalService implements ISucursalService {
     }
 
     // Validaciones
-    private void validarDatosSucursal(Sucursal sucursal) {
+    private void validarDatosSucursal(SucursalDTO sucursal) {
         if (esInvalido(sucursal.getNombre())
             || esInvalido(sucursal.getDireccion())
             || esInvalido(sucursal.getLocalidad())
@@ -67,8 +107,20 @@ public class SucursalService implements ISucursalService {
     }
 
     @Override
-    public Optional<Sucursal> obtenerCentral() {
-        return sucursalRepository.findByEsCentralTrue();
+    public Optional<SucursalDTO> obtenerCentral() {
+        return sucursalRepository.findByEsCentralTrue()
+                .map(nullable -> {
+                    SucursalDTO sucursalDTO = new SucursalDTO();
+                    sucursalDTO.setId(nullable.getId());
+                    sucursalDTO.setNombre(nullable.getNombre());
+                    sucursalDTO.setDireccion(nullable.getDireccion());
+                    sucursalDTO.setLocalidad(nullable.getLocalidad());
+                    sucursalDTO.setProvincia(nullable.getProvincia());
+                    sucursalDTO.setPais(nullable.getPais());
+                    sucursalDTO.setDiasEntregaCliente(nullable.getDiasEntregaCliente());
+                    sucursalDTO.setDiasEntregaDesdeCentral(nullable.getDiasEntregaDesdeCentral());
+                    return sucursalDTO;
+                });
     }
 
 }
