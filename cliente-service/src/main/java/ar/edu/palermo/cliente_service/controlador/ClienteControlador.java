@@ -1,6 +1,6 @@
 package ar.edu.palermo.cliente_service.controlador;
 
-import ar.edu.palermo.cliente_service.dominio.Cliente;
+import ar.edu.palermo.cliente_service.dto.ClienteDTO;
 import ar.edu.palermo.cliente_service.negocio.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +20,12 @@ public class ClienteControlador {
     }
 
     @GetMapping
-    public List<Cliente> obtenerTodos() {
+    public List<ClienteDTO> obtenerTodos() {
         return clienteService.obtenerTodos();
     }
 
     @PostMapping
-    public Cliente crear(@RequestBody Cliente cliente) {
+    public ClienteDTO crear(@RequestBody ClienteDTO cliente) {
         return clienteService.guardar(cliente);
     }
 

@@ -1,6 +1,7 @@
 package ar.edu.palermo.cliente_service.negocio.impl;
 
 import ar.edu.palermo.cliente_service.dominio.Cliente;
+import ar.edu.palermo.cliente_service.dto.ClienteDTO;
 import ar.edu.palermo.cliente_service.negocio.IClienteService;
 import ar.edu.palermo.cliente_service.repositorio.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,42 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cliente guardar(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteDTO guardar(ClienteDTO cliente) {
+        Cliente clienteEntity = new Cliente();
+        clienteEntity.setNombre(cliente.getNombre());
+        clienteEntity.setApellido(cliente.getApellido());
+        clienteEntity.setTelefono(cliente.getTelefono());
+        clienteEntity.setDni(cliente.getDni());
+        clienteRepository.save(clienteEntity);
+        ClienteDTO respuesta = new ClienteDTO();
+        respuesta.setId(clienteEntity.getId());
+        respuesta.setNombre(clienteEntity.getNombre());
+        respuesta.setApellido(clienteEntity.getApellido());
+        respuesta.setDni(clienteEntity.getDni());
+        respuesta.setTelefono(clienteEntity.getTelefono());
+
+        return respuesta;
     }
 
     @Override
-    public List<Cliente> obtenerTodos() {
-        return clienteRepository.findAll();
+    public List<ClienteDTO> obtenerTodos() {
+        return clienteRepository.findAll().stream()
+            .map(c -> new ClienteDTO(
+                c.getId(), c.getNombre(), c.getApellido(), c.getDni(), c.getTelefono()
+            ))
+            .toList();
     }
 
     @Override
-    public Optional<Cliente> obtenerPorId(Integer id) {
-        return clienteRepository.findById(id);
+    public Optional<ClienteDTO> obtenerPorId(Integer id) {
+        return clienteRepository.findById(id)
+            .map(c -> new ClienteDTO(
+                c.getId(),
+                c.getNombre(),
+                c.getApellido(),
+                c.getDni(),
+                c.getTelefono()
+            ));
     }
 
     @Override

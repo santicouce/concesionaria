@@ -1,70 +1,51 @@
-package ar.edu.palermo.cliente_service.dominio;
+package ar.edu.palermo.cliente_service.dto;
 
-import ar.edu.palermo.cliente_service.dto.ClienteDTO;
-import jakarta.persistence.*;
-
-@Entity
-public class Cliente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
+public class ClienteDTO {
+    private Integer id;      
     private String nombre;
     private String apellido;
     private String dni;
     private String telefono;
 
-    // Constructores
-    public Cliente() {
-    }
+    public ClienteDTO() { }
 
-    public Cliente(String nombre, String apellido, String dni, String telefono) {
-        setNombre(nombre);
-        setApellido(apellido);
-        setDni(dni);
-        setTelefono(telefono);
+    public ClienteDTO(Integer id, String nombre, String apellido, String dni, String telefono) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.telefono = telefono;
     }
 
     // Getters y setters
     public Integer getId() {
         return id;
     }
-
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     public String getApellido() {
         return apellido;
     }
-
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
     public String getDni() {
         return dni;
     }
-
     public void setDni(String dni) {
         this.dni = dni;
     }
-
     public String getTelefono() {
         return telefono;
     }
-
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public ClienteDTO map(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'map'");
     }
 }
